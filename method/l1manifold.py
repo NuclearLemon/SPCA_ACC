@@ -16,7 +16,7 @@ def project(x, g):
     return g * (x != 0)
 
 
-def manifold_accelerate(grad, param, cost=None, r_alpha=None):
+def manifold_accelerate(grad, param, r_alpha=None):
     """return param processed by riemannian gradient method"""
     r_grad = project(param, grad)
     return retraction(param, -r_alpha * r_grad)

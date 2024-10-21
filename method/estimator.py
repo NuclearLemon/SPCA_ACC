@@ -41,19 +41,10 @@ class Estimator(BaseEstimator):
     def f_obj(self, X, B, A):
         f = 0.5 * np.sum(self.compute_residual(X, B, A) ** 2)
         h = self.h_obj(B)
-        # h = self.alpha * np.sum(np.abs(B)) + 0.5 * self.beta * np.sum(B ** 2)
         return f + h
 
     def h_obj(self, B):
-        # return self.alpha * np.sum(np.abs(B)) + 0.5 * self.beta * np.sum(B ** 2)
         return self.alpha * np.sum(np.abs(B))
-
-    def get_update_b(self, B, A):
-        if self.xtx is not None:
-            return np.dot(self.xtx, B - A)
-        else:
-            # return np.dot(self.X.T, (np.dot(self.X, B) - np.dot(self.X, A))) + self.beta * B
-            return np.dot(self.X.T, (np.dot(self.X, B) - np.dot(self.X, A)))
 
     @staticmethod
     def soft_l1(arr, thresh):

@@ -1,6 +1,6 @@
 P_ALPHA = "alpha"
 D_ALPHA = 1e-5
-SVD_E, N_MAX_ITER, N_TOL, N_STEP = False, 100, 1e-5, 3e-6
+SVD_E, N_MAX_ITER, N_TOL, N_STEP = False, 100, 1e-4, 1e-6
 
 
 def get_df_method():

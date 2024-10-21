@@ -48,19 +48,20 @@ class SPCA_VP(Estimator):
         Z_U, Z_D, Z_V, t, start = None, None, None, time(), time()
         self.time_list.append(0)
         for n_iter in range(1, self.max_iter + 1):
-            # Update A: X'XB = UDV' Compute X'XB via SVD of X
+            # Update A
             start = time()
             Z = np.dot(self.xtx, B)
             Z_U, Z_D, Z_V = self.svd_method(Z, if_effect=self.svd_e)
             A = Z_U.dot(Z_V)
             self.time_a_list.append(time() - start)
-            # Proximal Gradient Descent to Update B
+            # Update B
             t = time()
             G = self.get_update_b(B, A, self.newton)
             B = B - self.step * G
             B = self.soft_l1(B, thresh=self.alpha)
             self.time_b_list.append(time() - t)
             if self.acc:
+                t = time()
                 B = manifold_accelerate(grad=G, param=B, r_alpha=self.acc_step)
                 self.time_acc_list.append(time() - t)
             pc_list.append(B)
